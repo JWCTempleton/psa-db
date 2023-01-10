@@ -13,8 +13,12 @@ const styles = {
 };
 
 function App({ cards }) {
+  const [cardData, setCardData] = useState(() => cards);
+
+  console.log(cardData);
+
   const cardElement = cards.map((card) => (
-    <div className="card" style={styles}>
+    <div className="card" style={styles} key={card.id}>
       <p>ID: {card.id}</p>
       <p>Company: {card.company}</p>
       <p>Description: {card.description}</p>
