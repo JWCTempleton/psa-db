@@ -22,7 +22,6 @@ function App({ cards }) {
     service: "",
   });
 
-  console.log(newCard);
   const handleNewCard = (event) => {
     const { name, value } = event.target;
     setNewCard((prevCard) => {
@@ -30,9 +29,30 @@ function App({ cards }) {
     });
   };
 
+  const addNewCard = (event) => {
+    event.preventDefault();
+    const newCardObject = {
+      id: cardData.length + 1,
+      company: newCard.company,
+      description: newCard.description,
+      notes: newCard.notes,
+      service: newCard.service,
+      received: new Date().toISOString(),
+      submitted: null,
+      status: "pending",
+    };
+    setCardData(cardData.concat(newCardObject));
+    setNewCard({
+      company: "",
+      description: "",
+      notes: "",
+      service: "",
+    });
+  };
+
   return (
     <div className="App">
-      <form style={styles}>
+      <form style={styles} onSubmit={addNewCard}>
         <input
           type="text"
           placeholder="Company"
@@ -65,9 +85,10 @@ function App({ cards }) {
           <option value="regular">Regular</option>
           <option value="value">Value</option>
         </select>
+        <button type="submit">Submit</button>
       </form>
       {cardData.map((card) => (
-        <Card card={card} />
+        <Card card={card} key={card.id} />
       ))}
     </div>
   );
