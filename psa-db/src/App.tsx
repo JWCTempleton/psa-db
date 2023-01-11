@@ -8,6 +8,9 @@ const styles = {
   width: "30rem",
   margin: "0 auto",
   gap: "2rem",
+  border: "1px solid white",
+  padding: "2rem",
+  borderRadius: "5px",
 };
 
 function App({ cards }) {
@@ -19,6 +22,14 @@ function App({ cards }) {
     service: "",
   });
 
+  console.log(newCard);
+  const handleNewCard = (event) => {
+    const { name, value } = event.target;
+    setNewCard((prevCard) => {
+      return { ...prevCard, [name]: value };
+    });
+  };
+
   return (
     <div className="App">
       <form style={styles}>
@@ -27,15 +38,27 @@ function App({ cards }) {
           placeholder="Company"
           name="company"
           value={newCard.company}
+          onChange={handleNewCard}
         />
         <textarea
           placeholder="Description"
           name="description"
           value={newCard.description}
+          onChange={handleNewCard}
         />
-        <textarea placeholder="Notes" name="notes" value={newCard.notes} />
+        <textarea
+          placeholder="Notes"
+          name="notes"
+          value={newCard.notes}
+          onChange={handleNewCard}
+        />
         <label htmlFor="service">Service Level</label>
-        <select id="service" value={newCard.service} name="service">
+        <select
+          id="service"
+          value={newCard.service}
+          name="service"
+          onChange={handleNewCard}
+        >
           <option value="walk-through">Walk Through</option>
           <option value="super-express">Super-Express</option>
           <option value="express">Express</option>

@@ -5,30 +5,8 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 .card {
   padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
 
 textarea {
@@ -42,6 +20,12 @@ input[type="text"] {
 }
 
 select {
-  gap: 0;
-  margin-top: -1.5rem;
+  width: 10rem;
+  margin: 0 auto;
+}
+
+label {
+  margin-bottom: -1.5rem;
+  font-size: 18px;
+  font-weight: bold;
 }
