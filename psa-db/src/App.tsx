@@ -85,7 +85,9 @@ function App({ cards }) {
           <option value="regular">Regular</option>
           <option value="value">Value</option>
         </select>
-        <button type="submit">Submit</button>
+        <button type="submit" width="3rem">
+          Submit
+        </button>
       </form>
       {cardData.map((card) => (
         <Card card={card} key={card.id} />
