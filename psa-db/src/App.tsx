@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     cardService.getAll().then((response) => {
-      setCardData(response.data);
+      setCardData(response);
     });
   }, []);
   const handleNewCard = (event) => {
