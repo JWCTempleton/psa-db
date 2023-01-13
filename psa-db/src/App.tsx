@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
+import cardService from "./services/cards";
 
 const styles = {
   display: "flex",
@@ -24,11 +24,10 @@ function App() {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/cards")
-      .then((response) => setCardData(response.data));
+    cardService.getAll().then((response) => {
+      setCardData(response.data);
+    });
   }, []);
-
   const handleNewCard = (event) => {
     const { name, value } = event.target;
     setNewCard((prevCard) => {
@@ -48,8 +47,8 @@ function App() {
       submitted: null,
       status: "pending",
     };
-    axios
-      .post("http://localhost:3001/cards", newCardObject)
+    cardService
+      .create(newCardObject)
       .then((response) => setCardData(cardData.concat(response.data)));
     setNewCard({
       company: "",
