@@ -48,7 +48,9 @@ function App() {
       submitted: null,
       status: "pending",
     };
-    setCardData(cardData.concat(newCardObject));
+    axios
+      .post("http://localhost:3001/cards", newCardObject)
+      .then((response) => setCardData(cardData.concat(response.data)));
     setNewCard({
       company: "",
       description: "",
