@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card";
 
@@ -13,14 +14,20 @@ const styles = {
   borderRadius: "5px",
 };
 
-function App({ cards }) {
-  const [cardData, setCardData] = useState(() => cards);
+function App() {
+  const [cardData, setCardData] = useState(() => []);
   const [newCard, setNewCard] = useState({
     company: "",
     description: "",
     notes: "",
     service: "",
   });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/cards")
+      .then((response) => setCardData(response.data));
+  }, []);
 
   const handleNewCard = (event) => {
     const { name, value } = event.target;
@@ -85,9 +92,7 @@ function App({ cards }) {
           <option value="regular">Regular</option>
           <option value="value">Value</option>
         </select>
-        <button type="submit" width="3rem">
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
       {cardData.map((card) => (
         <Card card={card} key={card.id} />
