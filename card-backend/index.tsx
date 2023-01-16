@@ -1,4 +1,5 @@
-const http = require("http");
+const express = require("express");
+const app = express();
 
 let cards = [
   {
@@ -53,11 +54,15 @@ let cards = [
   },
 ];
 
-const app = http.createServer((request, response) => {
-  response.writeHead(200, { "Content-Type": "application/json" });
-  response.end(JSON.stringify(cards));
+app.get("/", (request, response) => {
+  response.send("<h1>Hello World!</h1>");
+});
+
+app.get("/api/cards", (request, response) => {
+  response.json(cards);
 });
 
 const PORT = 3001;
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
