@@ -77,14 +77,34 @@ app.delete("/api/cards/:id", (request, response) => {
   response.status(204).end();
 });
 
-app.post("/api/cards", (request, response) => {
+// Just to ensure ever ID is unique, will be replaced with library in the future
+const generateId = () => {
   const maxId = cards.length > 0 ? Math.max(...cards.map((n) => n.id)) : 0;
+  return maxId + 1;
+};
 
-  const card = request.body;
-  card.id = maxId + 1;
-  console.log(card);
+app.post("/api/cards", (request, response) => {
+  const body = request.body;
+
+  if (!body.company || !body.description) {
+    return response.status(400).json({
+      error: "company or description missing",
+    });
+  }
+
+  const card = {
+    id: generateId(),
+    company: body.company,
+    description: body.description,
+    notes: body.notes || null,
+    received: new Date(),
+    service: body.service,
+    submitted: "pending",
+    status: "pending",
+  };
 
   cards = cards.concat(card);
+  console.log(card);
   response.json(card);
 });
 
