@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 let cards = [
   {
     id: 1,
@@ -73,6 +75,17 @@ app.delete("/api/cards/:id", (request, response) => {
   cards = cards.filter((card) => card.id !== id);
 
   response.status(204).end();
+});
+
+app.post("/api/cards", (request, response) => {
+  const maxId = cards.length > 0 ? Math.max(...cards.map((n) => n.id)) : 0;
+
+  const card = request.body;
+  card.id = maxId + 1;
+  console.log(card);
+
+  cards = cards.concat(card);
+  response.json(card);
 });
 
 const PORT = 3001;
