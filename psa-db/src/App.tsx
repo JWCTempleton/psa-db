@@ -28,14 +28,14 @@ function App() {
       setCardData(response);
     });
   }, []);
-  const handleNewCard = (event) => {
+  const handleNewCard = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
     setNewCard((prevCard) => {
       return { ...prevCard, [name]: value };
     });
   };
 
-  const addNewCard = (event) => {
+  const addNewCard = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const newCardObject = {
       id: cardData.length + 1,
@@ -96,7 +96,7 @@ function App() {
         <button type="submit">Submit</button>
       </form>
       {cardData.map((card) => (
-        <Card card={card} key={card.id} />
+        <Card card={card} />
       ))}
     </div>
   );
