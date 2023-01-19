@@ -5,7 +5,7 @@ import cardService from "./services/cards";
 
 const styles = {
   display: "flex",
-  flexDirection: "column",
+  flexDirection: "column" as "column",
   width: "30rem",
   margin: "0 auto",
   gap: "2rem",
@@ -58,9 +58,18 @@ function App() {
     });
   };
 
+  type Cards = {
+    id: number;
+    company: string;
+    description: string;
+    notes: string | null;
+    service: string;
+    status: string;
+  };
+
   return (
     <div className="App">
-      <form style={styles} onSubmit={addNewCard}>
+      <form style={styles as React.CSSProperties} onSubmit={addNewCard}>
         <input
           type="text"
           placeholder="Company"
@@ -95,9 +104,27 @@ function App() {
         </select>
         <button type="submit">Submit</button>
       </form>
-      {cardData.map((card) => (
-        <Card card={card} />
-      ))}
+      {cardData.map(
+        (card: {
+          id: number;
+          company: string;
+          description: string;
+          notes: string | null;
+          service: string;
+          status: string;
+        }) => (
+          <Card
+            card={card}
+            key={card.id}
+            id={undefined}
+            company={undefined}
+            description={undefined}
+            notes={undefined}
+            service={undefined}
+            status={undefined}
+          />
+        )
+      )}
     </div>
   );
 }
