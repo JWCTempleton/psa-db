@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.tsx",
-    "dev": "nodemon index.tsx"
+    "dev": "nodemon index.tsx",
+    "build:ui": "rm -rf dist && cd ../psa-db/ && npm run build && cp -r dist ../card-backend",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs"
   },
   "author": "JWCTempleton",
   "license": "ISC",
