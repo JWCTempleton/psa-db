@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "https://polished-sky-6335.fly.dev/api/cards";
+// const baseUrl = "https://polished-sky-6335.fly.dev/api/cards";
+const baseUrl = "/api/cards";
 
 const getAll = () => {
   const request = axios.get(baseUrl);
