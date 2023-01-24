@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const Card = require("./models/card.tsx");
 
 const requestLogger = (request, response, next) => {
   console.log("Method: ", request.method);
@@ -73,7 +75,9 @@ app.get("/", (request, response) => {
 });
 
 app.get("/api/cards", (request, response) => {
-  response.json(cards);
+  Card.find({}).then((cards) => {
+    response.json(cards);
+  });
 });
 
 app.get("/api/cards/:id", (request, response) => {
