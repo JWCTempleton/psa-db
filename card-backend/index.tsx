@@ -70,9 +70,9 @@ let cards = [
   },
 ];
 
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
+// app.get("/", (request, response) => {
+//   response.send("<h1>Hello World!</h1>");
+// });
 
 app.get("/api/cards", (request, response) => {
   Card.find({}).then((cards) => {
@@ -81,9 +81,9 @@ app.get("/api/cards", (request, response) => {
 });
 
 app.get("/api/cards/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const card = cards.find((card) => card.id === id);
-  card ? response.json(card) : response.status(404).end();
+  Card.findById(request.params.id).then((card) => {
+    response.json(card);
+  });
 });
 
 app.delete("/api/cards/:id", (request, response) => {
@@ -94,10 +94,10 @@ app.delete("/api/cards/:id", (request, response) => {
 });
 
 // Just to ensure ever ID is unique, will be replaced with library in the future
-const generateId = () => {
-  const maxId = cards.length > 0 ? Math.max(...cards.map((n) => n.id)) : 0;
-  return maxId + 1;
-};
+// const generateId = () => {
+//   const maxId = cards.length > 0 ? Math.max(...cards.map((n) => n.id)) : 0;
+//   return maxId + 1;
+// };
 
 app.post("/api/cards", (request, response) => {
   const body = request.body;
@@ -108,8 +108,7 @@ app.post("/api/cards", (request, response) => {
     });
   }
 
-  const card = {
-    id: generateId(),
+  const card = new Card({
     company: body.company,
     description: body.description,
     notes: body.notes || null,
@@ -117,11 +116,11 @@ app.post("/api/cards", (request, response) => {
     service: body.service,
     submitted: "pending",
     status: "pending",
-  };
+  });
 
-  cards = cards.concat(card);
-  console.log(card);
-  response.json(card);
+  card.save().then((savedCard) => {
+    response.json(savedCard);
+  });
 });
 
 const unknownEndpoint = (request, response) => {
