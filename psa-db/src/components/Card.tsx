@@ -5,6 +5,7 @@ import {
   ReactFragment,
   ReactPortal,
 } from "react";
+import { ReactPropTypes } from "react";
 
 const styles = {
   display: "flex",
@@ -16,88 +17,71 @@ const styles = {
   borderRadius: "5px",
 };
 
-type Cards = {
-  id: number;
+interface Cards {
+  id: string;
   company: string;
   description: string;
   notes: string | null;
   service: string;
   status: string;
-};
+}
 
-const Card = (props: {
-  id:
-    | number
-    | Key
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | null
-    | undefined;
-  company:
-    | string
-    | number
-    | boolean
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | ReactPortal
-    | null
-    | undefined;
-  description:
-    | string
-    | number
-    | boolean
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | ReactPortal
-    | null
-    | undefined;
-  notes:
-    | string
-    | number
-    | boolean
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | ReactPortal
-    | null
-    | undefined;
-  service:
-    | string
-    | number
-    | boolean
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | ReactPortal
-    | null
-    | undefined;
-  status:
-    | string
-    | number
-    | boolean
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | ReactPortal
-    | null
-    | undefined;
-  card: {
-    id: number;
-    company: string;
-    description: string;
-    notes: string | null;
-    service: string;
-    status: string;
+const Card: React.FunctionComponent<Cards> = (props) =>
+  //   id:
+  //     | string
+  //     | Key
+  //     | ReactElement<any, string | JSXElementConstructor<any>>
+  //     | ReactFragment
+  //     | null
+  //     | undefined;
+  //   company:
+  //     | string
+  //     | ReactElement<any, string | JSXElementConstructor<any>>
+  //     | ReactFragment
+  //     | ReactPortal
+  //     | null
+  //     | undefined;
+  //   description:
+  //     | string
+  //     | ReactElement<any, string | JSXElementConstructor<any>>
+  //     | ReactFragment
+  //     | ReactPortal
+  //     | null
+  //     | undefined;
+  //   notes:
+  //     | string
+  //     | ReactElement<any, string | JSXElementConstructor<any>>
+  //     | ReactFragment
+  //     | ReactPortal
+  //     | null
+  //     | undefined;
+  //   service:
+  //     | string
+  //     | ReactElement<any, string | JSXElementConstructor<any>>
+  //     | ReactFragment
+  //     | ReactPortal
+  //     | null
+  //     | undefined;
+  //   status:
+  //     | string
+  //     | ReactElement<any, string | JSXElementConstructor<any>>
+  //     | ReactFragment
+  //     | ReactPortal
+  //     | null
+  //     | undefined;
+
+  {
+    const { id, company, description, notes, service, status } = props;
+    return (
+      <div className="card" style={styles as React.CSSProperties}>
+        <p>ID: {id}</p>
+        <p>Company: {company}</p>
+        <p>Description: {description}</p>
+        {notes && <p>Notes: {notes}</p>}
+        <p>Service: {service}</p>
+        <p>Status: {status}</p>
+      </div>
+    );
   };
-}) => {
-  console.log("Card", props.card.description);
-  return (
-    <div className="card" style={styles as React.CSSProperties}>
-      <p>ID: {props.card.id}</p>
-      <p>Company: {props.card.company}</p>
-      <p>Description: {props.card.description}</p>
-      {props.card.notes && <p>Notes: {props.card.notes}</p>}
-      <p>Service: {props.card.service}</p>
-      <p>Status: {props.card.status}</p>
-    </div>
-  );
-};
 
 export default Card;

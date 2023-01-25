@@ -15,7 +15,7 @@ const styles = {
 };
 
 function App() {
-  const [cardData, setCardData] = useState(() => []);
+  const [cardData, setCardData] = useState<any[]>([]);
   const [newCard, setNewCard] = useState({
     company: "",
     description: "",
@@ -28,6 +28,7 @@ function App() {
       setCardData(response);
     });
   }, []);
+
   const handleNewCard = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
     setNewCard((prevCard) => {
@@ -38,34 +39,30 @@ function App() {
   const addNewCard = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const newCardObject = {
-      id: cardData.length + 1,
       company: newCard.company,
       description: newCard.description,
       notes: newCard.notes,
       service: newCard.service,
-      received: new Date().toISOString(),
-      submitted: null,
-      status: "pending",
     };
-    cardService
-      .create(newCardObject)
-      .then((response) => setCardData(cardData.concat(response.data)));
-    setNewCard({
-      company: "",
-      description: "",
-      notes: "",
-      service: "",
+    cardService.create(newCardObject).then((response) => {
+      setCardData(cardData.concat(response.data));
+      setNewCard({
+        company: "",
+        description: "",
+        notes: "",
+        service: "",
+      });
     });
   };
 
-  type Cards = {
-    id: number;
+  interface Cards {
+    id: string;
     company: string;
     description: string;
     notes: string | null;
     service: string;
     status: string;
-  };
+  }
 
   return (
     <div className="App">
@@ -104,27 +101,9 @@ function App() {
         </select>
         <button type="submit">Submit</button>
       </form>
-      {cardData.map(
-        (card: {
-          id: number;
-          company: string;
-          description: string;
-          notes: string | null;
-          service: string;
-          status: string;
-        }) => (
-          <Card
-            card={card}
-            key={card.id}
-            id={undefined}
-            company={undefined}
-            description={undefined}
-            notes={undefined}
-            service={undefined}
-            status={undefined}
-          />
-        )
-      )}
+      {cardData.map((card: Cards) => {
+        return <Card key={card.id} card={card} />;
+      })}
     </div>
   );
 }
