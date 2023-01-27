@@ -45,24 +45,27 @@ function App() {
       service: newCard.service,
     };
     cardService.create(newCardObject).then((response) => {
-      setCardData(cardData.concat(response.data));
-      setNewCard({
-        company: "",
-        description: "",
-        notes: "",
-        service: "",
-      });
+      setCardData(cardData.concat(response));
+    });
+    setNewCard({
+      company: "",
+      description: "",
+      notes: "",
+      service: "",
     });
   };
+  console.log("new card", newCard);
 
-  interface Cards {
+  type CardsProps = {
     id: string;
     company: string;
     description: string;
     notes: string | null;
     service: string;
     status: string;
-  }
+  };
+
+  console.log("data", cardData);
 
   return (
     <div className="App">
@@ -101,8 +104,9 @@ function App() {
         </select>
         <button type="submit">Submit</button>
       </form>
-      {cardData.map((card: Cards) => {
-        return <Card key={card.id} card={card} />;
+      {cardData.map((card: CardsProps) => {
+        let c = card as CardsProps;
+        return <Card key={card.id} card={c} />;
       })}
     </div>
   );

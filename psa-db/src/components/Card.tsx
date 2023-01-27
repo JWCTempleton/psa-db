@@ -17,16 +17,18 @@ const styles = {
   borderRadius: "5px",
 };
 
-interface Cards {
-  id: string;
-  company: string;
-  description: string;
-  notes: string | null;
-  service: string;
-  status: string;
-}
+type CardsProps = {
+  card: {
+    id: string;
+    company: string;
+    description: string;
+    notes: string | null;
+    service: string;
+    status: string;
+  };
+};
 
-const Card: React.FunctionComponent<Cards> = (props) =>
+const Card = (props: CardsProps) =>
   //   id:
   //     | string
   //     | Key
@@ -71,15 +73,14 @@ const Card: React.FunctionComponent<Cards> = (props) =>
   //     | undefined;
 
   {
-    const { id, company, description, notes, service, status } = props;
     return (
       <div className="card" style={styles as React.CSSProperties}>
-        <p>ID: {id}</p>
-        <p>Company: {company}</p>
-        <p>Description: {description}</p>
-        {notes && <p>Notes: {notes}</p>}
-        <p>Service: {service}</p>
-        <p>Status: {status}</p>
+        <p>ID: {props.card.id}</p>
+        <p>Company: {props.card.company}</p>
+        <p>Description: {props.card.description}</p>
+        {props.card.notes && <p>Notes: {props.card.notes}</p>}
+        <p>Service: {props.card.service}</p>
+        <p>Status: {props.card.status}</p>
       </div>
     );
   };
